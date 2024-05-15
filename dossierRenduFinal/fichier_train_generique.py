@@ -18,13 +18,13 @@ preprocessing = True
 augmentation_artificielle_dataset = True
 
 # Le nombre d'images souhaitées, dans le cas où l'on choisit d'augmenter notre dataset
-nombre_dimages_souhaitees = 40000
+nombre_dimages_souhaitees = 200000
 
 # Proportion de séparation de notre ensemble en un ensemble d'entraînement et de test par la suite, ici à 20%
 proportion = 0.2
 
 # Epoques d'entrainements
-nbEpochs = 3
+nbEpochs = 20
 
 # Noyau de convolution
 kernelSize=5
@@ -115,6 +115,7 @@ x_train = []
 y_train = []
 
 # Importation de nos images ainsi que leurs labels
+print(f"Debut")
 for classe in range(1,51):
     for num in range(1,10):
         if os.path.isfile(f"../ImagesRognees/num{classe}/{classe}_num_{num}.jpg"):
@@ -125,10 +126,14 @@ for classe in range(1,51):
                 img = preprocess_image(img)
             x_train.append(img)
             y_train.append(classe)
+print(f"Fin")
+
 
             
 x_train = np.array(x_train)
 y_train = np.array(y_train)
+
+print(f"{x_train.shape}")
 
 # ===
 
@@ -146,6 +151,7 @@ if augmentation_artificielle_dataset:
         fill_mode='nearest'     # Remplissage des pixels disparaissant (causés par les décalage / la rotation) par le pixel le plus proche 
     )
 
+    x_train_augmented = x_train
     # Listes récupérant les images générées, et leurs labels
     augmented_images = []
     augmented_labels = []
@@ -153,7 +159,7 @@ if augmentation_artificielle_dataset:
     # Génération des images
     desired_augmentation_size = nombre_dimages_souhaitees  # Nombre d'images générées souhaitées
     batch_size = 32  # Nombre d'images générées à chaque itération
-    for x_batch, y_batch in datagen.flow(x_train, y_train, batch_size=batch_size):
+    for x_batch, y_batch in datagen.flow(x_train_augmented, y_train, batch_size=batch_size):
         augmented_images.append(x_batch) # Ajout des images de notre nouveau batch
         augmented_labels.append(y_batch) # Ajout des labels des images de notre nouveau batch
         if len(augmented_images) * batch_size >= desired_augmentation_size:

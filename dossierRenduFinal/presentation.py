@@ -8,7 +8,7 @@ import tensorflow as tf
 #model = tf.keras.models.load_model("dossierRenduFinal/MP/noyau5x5_10epochs_images70x70_flip_shift_preprocessed.h5")
 
 # Pour la présentation
-model = tf.keras.models.load_model("dossierRenduFinal/noyau5x5_3epochs/noyau5x5_3epochs.h5")
+model = tf.keras.models.load_model("./noyau5x5_5epochs/noyau5x5_5epochs.h5")
 
 class DragDropImageApp:
     def __init__(self, root):
