@@ -118,8 +118,8 @@ y_train = []
 print(f"Debut")
 for classe in range(1,51):
     for num in range(1,10):
-        if os.path.isfile(f"../ImagesRognees/num{classe}/{classe}_num_{num}.jpg"):
-            img = openImage(f"../ImagesRognees/num{classe}/{classe}_num_{num}.jpg")
+        if os.path.isfile(f"./ImagesRognees/num{classe}/{classe}_num_{num}.jpg"):
+            img = openImage(f"./ImagesRognees/num{classe}/{classe}_num_{num}.jpg")
 
             # Si un pré-traitement est souhaité (défini au début), alors on pré-traite notre image
             if preprocessing:
