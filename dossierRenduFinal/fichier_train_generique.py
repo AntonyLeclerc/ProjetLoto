@@ -18,13 +18,13 @@ preprocessing = True
 augmentation_artificielle_dataset = True
 
 # Le nombre d'images souhaitées, dans le cas où l'on choisit d'augmenter notre dataset
-nombre_dimages_souhaitees = 200000
+nombre_dimages_souhaitees = 20000
 
 # Proportion de séparation de notre ensemble en un ensemble d'entraînement et de test par la suite, ici à 20%
 proportion = 0.2
 
 # Epoques d'entrainements
-nbEpochs = 20
+nbEpochs = 3
 
 # Noyau de convolution
 kernelSize=5
