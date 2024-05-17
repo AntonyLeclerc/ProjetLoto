@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import tensorflow as tf
 
-#model = tf.keras.models.load_model("dossierRenduFinal/MP/noyau5x5_10epochs_images70x70_flip_shift_preprocessed.h5")
+# model = tf.keras.models.load_model("dossierRenduFinal/MP/noyau5x5_10epochs_images70x70_flip_shift_preprocessed.h5")
 
 # Pour la présentation
 model = tf.keras.models.load_model("./noyau5x5_20epochs/noyau5x5_20epochs.h5")
@@ -58,10 +58,16 @@ class DragDropImageApp:
 
         self.numpyImage = np.array(image)
         self.image = ImageTk.PhotoImage(image)
+        self.canvas.delete(self.image_obj)  # Supprime l'ancienne image si elle existe
         self.image_obj = self.canvas.create_image(200, 200, image=self.image)
 
         # Ajout du label à l'importation
-        self.text_label = tk.Label(self.canvas, text=f"C'est un {predictImage(model, self.numpyImage)} !", fg="black", font=("Helvetica", 12))
+        classe, proba = predictImage(model, self.numpyImage)
+
+        if self.text_label:  # Supprime l'ancien label si il existe
+            self.text_label.destroy()
+
+        self.text_label = tk.Label(self.canvas, text=f"Classe : {classe}\nProbabilité : {proba}", fg="black", font=("Helvetica", 12))
         self.canvas.create_window(200, 350, window=self.text_label)
 
     def on_drag_start(self, event):
@@ -104,9 +110,9 @@ def predictImage(m, img):
         
     # Prédit l'image
     prediction = m.predict(toPredict)
+    ind = np.argmax(prediction)
 
-    return np.argmax(prediction)
-
+    return ind, prediction[0][ind]
 
 
 if __name__ == "__main__":
